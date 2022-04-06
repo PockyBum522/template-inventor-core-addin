@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using Inventor;
-using System.Runtime.InteropServices;
+﻿using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Inventor;
 
-namespace INVENTOR_DrawingFiller
+namespace CoreAddIn.AddInWorkers
 {
     [ProgId("INVENTOR_DrawingFiller.StandardAddInServer")]
     [Guid(Globals.g_simpleAddInClientID)]

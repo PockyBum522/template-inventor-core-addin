@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Windows.Forms;
 using Inventor;
 
-namespace INVENTOR_DrawingFiller
+namespace CoreAddIn.AddInWorkers
 {
     public static class AddinUtilities
     {
