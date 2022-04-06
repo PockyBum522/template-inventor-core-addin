@@ -1,0 +1,13 @@
+<Addin Type="Standard">
+  <!--Created for Autodesk Inventor >= 2015 (Version 19.0)-->
+  <ClassId>{5d437d7f-a9a9-4e01-a509-bcd8cced82e1}</ClassId>
+  <ClientId>{5d437d7f-a9a9-4e01-a509-bcd8cced82e1}</ClientId>
+  <DisplayName>TI Drawings: Title Block From Mavis</DisplayName>
+  <Description>Gets ticket data from MAVIS and fills things like title block, parts, materials, etc</Description>
+  <Assembly>C:\ProgramData\Autodesk\Inventor Addins\INVENTOR_DrawingFiller\INVENTOR_DrawingFiller.dll</Assembly>
+  <LoadOnStartUp>0</LoadOnStartUp>
+  <UserUnloadable>1</UserUnloadable>
+  <Hidden>0</Hidden>
+  <DataVersion>1</DataVersion>
+  <UserInterfaceVersion>1</UserInterfaceVersion>
+</Addin>
