@@ -8,7 +8,7 @@ namespace CoreAddIn
     [ComVisible(true)]
     [Guid(Globals.g_simpleAddInClientID)]
     [ProgId("CoreAddIn.StandardAddInServer")]
-    public class StandardAddInServer : ApplicationAddInServer, IStandardAddInServer
+    public class StandardAddInServer : ApplicationAddInServer
     {
         // *********************************************************************************
         // * The two declarations below are related to adding buttons to Inventor's UI.
@@ -283,7 +283,6 @@ namespace CoreAddIn
         // you need to update this ID along with the ID in the .manifest file, the .addin file
         // and create a new ID for the typelib GUID in AssemblyInfo.vb
         public const string g_simpleAddInClientID = "5d437d7f-a9a9-4e01-a509-bcd8cced82e1";
-        public const string g_simpleAddInInterfaceID = "C9EF0B81-B014-420F-B4FE-4374FCE961F7";
         public const string g_addInClientID = "{" + g_simpleAddInClientID + "}";
     }
 }
