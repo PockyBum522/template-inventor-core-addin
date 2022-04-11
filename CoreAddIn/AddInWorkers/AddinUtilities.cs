@@ -76,7 +76,7 @@ namespace CoreAddIn
                     if (dllPath != null)
                         IconFolder = System.IO.Path.Combine(dllPath, IconFolder);
                     else
-                        throw new ArgumentNullException($"{ nameof(IconFolder) } was null and should not be");
+                        throw new NullReferenceException($"In { nameof(CreateButtonDefinition) }, { nameof(dllPath) }  was null and should not be");
                 }
             }
             
@@ -95,7 +95,8 @@ namespace CoreAddIn
                     {
                         try
                         {
-                            System.Drawing.Bitmap image16x16 = new System.Drawing.Bitmap(filename16x16);
+                            var image16x16 = new Bitmap(filename16x16);
+
                             iPicDisp16x16 = ConvertImage.ConvertImageToIPictureDisp(image16x16);
                         }
                         catch (Exception ex)
@@ -110,7 +111,8 @@ namespace CoreAddIn
                     {
                         try
                         {
-                            System.Drawing.Bitmap image32x32 = new System.Drawing.Bitmap(filename32x32);
+                            var image32x32 = new Bitmap(filename32x32);
+
                             iPicDisp32x32 = ConvertImage.ConvertImageToIPictureDisp(image32x32);
                         }
                         catch (Exception ex)
@@ -187,7 +189,7 @@ namespace CoreAddIn
                     if (dllPath != null)
                         IconFolder = System.IO.Path.Combine(dllPath, IconFolder);
                     else
-                        throw new ArgumentNullException($"{ nameof(IconFolder) } is null and should not be");
+                        throw new NullReferenceException($"In { nameof(CreateComboBoxDefinition) }, { nameof(dllPath) }  was null and should not be");
                 }
             }
 
@@ -206,7 +208,7 @@ namespace CoreAddIn
                     {
                         try
                         {
-                            System.Drawing.Bitmap image16x16 = new System.Drawing.Bitmap(filename16x16);
+                            var image16x16 = new Bitmap(filename16x16);
                             iPicDisp16x16 = ConvertImage.ConvertImageToIPictureDisp(image16x16);
                         }
                         catch (Exception ex)
@@ -221,7 +223,7 @@ namespace CoreAddIn
                     {
                         try
                         {
-                            System.Drawing.Bitmap image32x32 = new System.Drawing.Bitmap(filename32x32);
+                            var image32x32 = new Bitmap(filename32x32);
                             iPicDisp32x32 = ConvertImage.ConvertImageToIPictureDisp(image32x32);
                         }
                         catch (Exception ex)
@@ -276,18 +278,10 @@ namespace CoreAddIn
         {
             public WindowWrapper(IntPtr handle)
             {
-                _hwnd = handle;
+                Handle = handle;
             }
 
-            public IntPtr Handle
-            {
-                get
-                {
-                    return _hwnd;
-                }
-            }
-
-            private IntPtr _hwnd;
+            public IntPtr Handle { get; }
         }
 
 
