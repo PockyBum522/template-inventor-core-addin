@@ -1,13 +1,14 @@
 <Addin Type="Standard">
-  <!--Created for Autodesk Inventor >= 2015 (Version 19.0)-->
+  <!--Created for Autodesk Inventor Version 25.0-->
   <ClassId>{5d437d7f-a9a9-4e01-a509-bcd8cced82e1}</ClassId>
   <ClientId>{5d437d7f-a9a9-4e01-a509-bcd8cced82e1}</ClientId>
-  <DisplayName>CoreAddIn</DisplayName>
-  <Description>CoreAddIn</Description>
+  <DisplayName>Core AddIn Demo</DisplayName>
+  <Description>Addin description</Description>
   <Assembly>C:\ProgramData\Autodesk\Inventor Addins\CoreAddIn\CoreAddIn.dll</Assembly>
   <LoadOnStartUp>1</LoadOnStartUp>
   <UserUnloadable>1</UserUnloadable>
   <Hidden>0</Hidden>
+  <SupportedSoftwareVersionGreaterThan>15..</SupportedSoftwareVersionGreaterThan>
   <DataVersion>1</DataVersion>
   <UserInterfaceVersion>1</UserInterfaceVersion>
 </Addin>
