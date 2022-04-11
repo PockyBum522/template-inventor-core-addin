@@ -84,7 +84,7 @@ namespace CoreAddIn
                     case "dw_NewWithPathFromPart":
 
                         if (Globals.InvApp != null)
-                            System.Windows.MessageBox.Show($"{ Globals.InvApp.ActiveDocument.DisplayName } is the part name (test:07)");
+                            System.Windows.MessageBox.Show($"{ Globals.InvApp.ActiveDocument.DisplayName } is the part name (test:09)");
                         else
                             throw new NullReferenceException($"{ nameof(Globals.InvApp) } was null. We somehow do not have a valid Inventor Application reference");
                                                

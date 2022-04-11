@@ -66,4 +66,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Interop" Version="17.1.32210.191" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo f | xcopy /f /y &quot;$(TargetDir)$(TargetName).X.manifest&quot; &quot;$(TargetDir)$(TargetName).dll.manifest&quot;&#xD;&#xA;echo f | xcopy /f /y &quot;$(TargetDir)Resources\Microsoft.VisualStudio.Interop.dll&quot; &quot;$(TargetDir)Microsoft.VisualStudio.Interop.dll&quot;&#xD;&#xA;exit 0" />
+  </Target>
+
 </Project>
