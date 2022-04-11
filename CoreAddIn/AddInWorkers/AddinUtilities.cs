@@ -37,17 +37,21 @@ namespace CoreAddIn
         /// <returns>
         /// Returns the newly created button definition or Nothing in case of failure.
         /// </returns>
-        public static Inventor.ButtonDefinition CreateButtonDefinition(string DisplayName,
+        public static Inventor.ButtonDefinition? CreateButtonDefinition(string DisplayName,
                                                                        string InternalName,
                                                                        string ToolTip = "",
                                                                        string IconFolder = "")
         {
 
             // Check to see if a command already exists is the specified internal name.
-            Inventor.ButtonDefinition testDef = null;
+            Inventor.ButtonDefinition? testDef = null;
+
             try
             {
-                testDef = (Inventor.ButtonDefinition)Globals.invApp.CommandManager.ControlDefinitions[InternalName];
+                if (Globals.invApp != null)
+                    testDef = (Inventor.ButtonDefinition)Globals.invApp.CommandManager.ControlDefinitions[InternalName];
+                else
+                    throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
             }
             catch 
             {
@@ -67,15 +71,19 @@ namespace CoreAddIn
                 {
                     // The folder provided doesn't exist, so assume it is a relative path and
                     // build up the full path.
-                    string dllPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                    string? dllPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-                    IconFolder = System.IO.Path.Combine(dllPath, IconFolder);
+                    if (dllPath != null)
+                        IconFolder = System.IO.Path.Combine(dllPath, IconFolder);
+                    else
+                        throw new ArgumentNullException($"{ nameof(IconFolder) } was null and should not be");
                 }
             }
             
             // Get the images from the specified icon folder.
-            stdole.IPictureDisp iPicDisp16x16 = null;
-            stdole.IPictureDisp iPicDisp32x32 = null;
+            stdole.IPictureDisp? iPicDisp16x16 = null;
+            stdole.IPictureDisp? iPicDisp32x32 = null;
+
             if (!string.IsNullOrEmpty(IconFolder))
             {
                 if (System.IO.Directory.Exists(IconFolder))
@@ -117,9 +125,13 @@ namespace CoreAddIn
 
             try
             {
-                // Get the ControlDefinitions collection.
-                ControlDefinitions controlDefs = Globals.invApp.CommandManager.ControlDefinitions;
+                ControlDefinitions controlDefs;
 
+                if (Globals.invApp != null)
+                    controlDefs = Globals.invApp.CommandManager.ControlDefinitions;
+                else
+                    throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
+                
                 // Create the command defintion.
                 ButtonDefinition btnDef = controlDefs.AddButtonDefinition(DisplayName, InternalName, Inventor.CommandTypesEnum.kShapeEditCmdType, Globals.g_addInClientID, "", ToolTip, iPicDisp16x16, iPicDisp32x32);
 
@@ -132,7 +144,7 @@ namespace CoreAddIn
             }
         }
 
-        public static Inventor.ComboBoxDefinition CreateComboBoxDefinition(string DisplayName,
+        public static Inventor.ComboBoxDefinition? CreateComboBoxDefinition(string DisplayName,
                                                                            string InternalName,
                                                                            int comboWidth = 100,
                                                                            string ToolTip = "",
@@ -140,10 +152,16 @@ namespace CoreAddIn
         {
 
             // Check to see if a command already exists is the specified internal name.
-            Inventor.ButtonDefinition testDef = null;
+            Inventor.ButtonDefinition? testDef = null;
+
             try
             {
-                testDef = (Inventor.ButtonDefinition)Globals.invApp.CommandManager.ControlDefinitions[InternalName];
+                if (Globals.invApp != null)
+                    testDef = (Inventor.ButtonDefinition)Globals.invApp.CommandManager.ControlDefinitions[InternalName];
+                else
+                    throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
+
+                
             }
             catch
             {
@@ -153,6 +171,7 @@ namespace CoreAddIn
             if (!(testDef == null))
             {
                 System.Windows.MessageBox.Show("Error when loading the add-in \"INVENTOR_DrawingFiller\". A command already exists with the same internal name. Each add-in must have a unique internal name. Change the internal name in the call to CreateButtonDefinition.", "Title Block Filler Inventor Add-In");
+                
                 return null;
             }
 
@@ -163,15 +182,18 @@ namespace CoreAddIn
                 {
                     // The folder provided doesn't exist, so assume it is a relative path and
                     // build up the full path.
-                    string dllPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                    string? dllPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-                    IconFolder = System.IO.Path.Combine(dllPath, IconFolder);
+                    if (dllPath != null)
+                        IconFolder = System.IO.Path.Combine(dllPath, IconFolder);
+                    else
+                        throw new ArgumentNullException($"{ nameof(IconFolder) } is null and should not be");
                 }
             }
 
             // Get the images from the specified icon folder.
-            stdole.IPictureDisp iPicDisp16x16 = null;
-            stdole.IPictureDisp iPicDisp32x32 = null;
+            stdole.IPictureDisp? iPicDisp16x16 = null;
+            stdole.IPictureDisp? iPicDisp32x32 = null;
 
             if (!string.IsNullOrEmpty(IconFolder))
             {
@@ -215,7 +237,12 @@ namespace CoreAddIn
             try
             {
                 // Get the ControlDefinitions collection.
-                ControlDefinitions controlDefs = Globals.invApp.CommandManager.ControlDefinitions;
+                ControlDefinitions controlDefs;
+
+                if (Globals.invApp != null)
+                    controlDefs = Globals.invApp.CommandManager.ControlDefinitions;
+                else
+                    throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
 
                 // Create the command defintion.
                 ComboBoxDefinition comboDef = controlDefs.AddComboBoxDefinition(DisplayName,
@@ -267,16 +294,13 @@ namespace CoreAddIn
         // Class used to convert bitmaps and icons between their .Net native types
         // and an IPictureDisp object which is what the Inventor API requires.
 
-        [System.Security.Permissions.PermissionSet
-        (System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
         public class ConvertImage : System.Windows.Forms.AxHost
         {
-            public ConvertImage()
-                : base("59EE46BA-677D-4d20-BF10-8D8067CB8B32")
+            public ConvertImage() : base("59EE46BA-677D-4d20-BF10-8D8067CB8B32")
             {
             }
 
-            public static stdole.IPictureDisp ConvertImageToIPictureDisp(System.Drawing.Image Image)
+            public static stdole.IPictureDisp? ConvertImageToIPictureDisp(System.Drawing.Image Image)
             {
                 try
                 {
@@ -285,11 +309,12 @@ namespace CoreAddIn
                 catch (Exception ex)
                 {
                     System.Windows.MessageBox.Show("Couldn't ConvertImageToIPictureDisp: " + ex.Message);
+                    
                     return null;
                 }
             }
 
-            public static System.Drawing.Image ConvertIPictureDispToImage(stdole.IPictureDisp IPict)
+            public static System.Drawing.Image? ConvertIPictureDispToImage(stdole.IPictureDisp IPict)
             {
                 try
                 {
@@ -298,6 +323,7 @@ namespace CoreAddIn
                 catch (Exception ex)
                 {
                     System.Windows.MessageBox.Show("Couldn't set up ConvertIPictureDispToImage: " + ex.Message);
+
                     return null;
                 }
             }

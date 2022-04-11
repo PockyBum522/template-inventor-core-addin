@@ -18,9 +18,9 @@ namespace CoreAddIn
 
         // Declaration of the object for the UserInterfaceEvents to be able to handle
         // if the user resets the ribbon so the button can be added back in.
-        private UserInterfaceEvents _m_uiEvents;
+        private UserInterfaceEvents? _m_uiEvents;
 
-        public UserInterfaceEvents m_uiEvents
+        public UserInterfaceEvents? m_uiEvents
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
             get
@@ -49,14 +49,14 @@ namespace CoreAddIn
         // that apply to the button can be duplicated from this example.
         public class UI_Button
         {
-            private ButtonDefinition _bd;
+            private ButtonDefinition? _bd;
 
-            public ButtonDefinition bd
+            public ButtonDefinition? bd
             {
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 get
                 {
-                    return this._bd;
+                    return _bd;
                 }
 
                 [MethodImpl(MethodImplOptions.Synchronized)]
@@ -78,10 +78,15 @@ namespace CoreAddIn
             private void bd_OnExecute(NameValueMap Context)
             {
                 // Link button clicks to their respective commands.
-                switch (bd.InternalName)
+                switch (bd?.InternalName)
                 {
                     case "dw_NewWithPathFromPart":
-                        System.Windows.MessageBox.Show(Globals.invApp.ActiveDocument.DisplayName);
+
+                        if (Globals.invApp != null)
+                            System.Windows.MessageBox.Show($"{ Globals.invApp.ActiveDocument.DisplayName } is the part name (test:03)");
+                        else
+                            throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
+                                               
                         return;
 
                     default:
@@ -95,11 +100,12 @@ namespace CoreAddIn
         {
             UI_Button MyButton = new UI_Button();
             MyButton.bd = AddinUtilities.CreateButtonDefinition(display_text, internal_name, "", icon_path);
-            return MyButton.bd;
+
+            return MyButton.bd ?? throw new ArgumentNullException($" {nameof(MyButton) } was null and should not be");
         }
 
         // Declare all buttons here
-        ButtonDefinition ButtonShowPartName;
+        ButtonDefinition? ButtonShowPartName;
 
         // This method is called by Inventor when it loads the AddIn. The AddInSiteObject provides access  
         // to the Inventor Application object. The FirstTime flag indicates if the AddIn is loaded for
@@ -161,7 +167,7 @@ namespace CoreAddIn
         // programs. Typically, this  would be done by implementing the AddIn's API
         // interface in a class and returning that class object through this property.
         // Typically it's not used, like in this case, and returns Nothing.
-        public object Automation
+        public object? Automation
         {
             get
             {
@@ -192,7 +198,13 @@ namespace CoreAddIn
             // UnknownDocument
             //Ribbon asmRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Assembly"];
             //Ribbon prtRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Part"];
-            Ribbon partRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Part"];
+
+            Ribbon partRibbon;
+
+            if (Globals.invApp != null)
+                partRibbon = Globals.invApp.UserInterfaceManager.Ribbons["Part"];
+            else
+                throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
 
 
             // Set up Tabs.
@@ -219,8 +231,8 @@ namespace CoreAddIn
 
         private RibbonTab setup_tab(string display_name, string internal_name, Ribbon inv_ribbon)
         {
-            RibbonTab setup_tabRet = default(RibbonTab);
-            RibbonTab ribbon_tab = null;
+            RibbonTab? setup_tabRet = default(RibbonTab);
+            RibbonTab? ribbon_tab = null;
 
             try
             {
@@ -244,8 +256,8 @@ namespace CoreAddIn
 
         private RibbonPanel setup_panel(string display_name, string internal_name, RibbonTab ribbon_tab)
         {
-            RibbonPanel setup_panelRet = default(RibbonPanel);
-            RibbonPanel ribbon_panel = null;
+            RibbonPanel? setup_panelRet = default(RibbonPanel);
+            RibbonPanel? ribbon_panel = null;
 
             try
             {
@@ -277,7 +289,7 @@ namespace CoreAddIn
     public static class Globals
     {
         // Inventor application object.
-        public static Inventor.Application invApp;
+        public static Inventor.Application? invApp;
 
         // The unique ID for this add-in.  If this add-in is copied to create a new add-in
         // you need to update this ID along with the ID in the .manifest file, the .addin file
