@@ -106,8 +106,6 @@ namespace CoreAddIn
         // the first time. However, with the introduction of the ribbon this argument is always true.
         public void Activate(ApplicationAddInSite addInSiteObject, bool firstTime)
         {
-            MessageBox.Show("Starting Activate()");
-
             try
             {
                 // Initialize AddIn members.
