@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Windows;
 using Inventor;
 
-namespace CoreAddIn.AddInWorkers
+namespace CoreAddIn
 {
     public static class AddinUtilities
     {
@@ -56,7 +56,7 @@ namespace CoreAddIn.AddInWorkers
 
             if (!(testDef == null))
             {
-                MessageBox.Show("Error when loading the add-in \"INVENTOR_DrawingFiller\". A command already exists with the same internal name. Each add-in must have a unique internal name. Change the internal name in the call to CreateButtonDefinition.", "Title Block Filler Inventor Add-In");
+                System.Windows.MessageBox.Show("Error when loading the add-in \"INVENTOR_DrawingFiller\". A command already exists with the same internal name. Each add-in must have a unique internal name. Change the internal name in the call to CreateButtonDefinition.", "Title Block Filler Inventor Add-In");
                 return null;
             }
 
@@ -72,7 +72,7 @@ namespace CoreAddIn.AddInWorkers
                     IconFolder = System.IO.Path.Combine(dllPath, IconFolder);
                 }
             }
-
+            
             // Get the images from the specified icon folder.
             stdole.IPictureDisp iPicDisp16x16 = null;
             stdole.IPictureDisp iPicDisp32x32 = null;
@@ -92,11 +92,11 @@ namespace CoreAddIn.AddInWorkers
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Unable to load the 16x16.png image from \"" + IconFolder + "\"." + System.Environment.NewLine + "No small icon will be used.", "Error Loading Icon" + ex.Message);
+                            System.Windows.MessageBox.Show("Unable to load the 16x16.png image from \"" + IconFolder + "\"." + System.Environment.NewLine + "No small icon will be used.", "Error Loading Icon" + ex.Message);
                         }
                     }
                     else
-                        MessageBox.Show("The icon for the small button does not exist: \"" + filename16x16 + "\"." + System.Environment.NewLine + "No small icon will be used.", "Error Loading Icon");
+                        System.Windows.MessageBox.Show("The icon for the small button does not exist: \"" + filename16x16 + "\"." + System.Environment.NewLine + "No small icon will be used.", "Error Loading Icon");
 
                     if (System.IO.File.Exists(filename32x32))
                     {
@@ -107,11 +107,11 @@ namespace CoreAddIn.AddInWorkers
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Unable to load the 32x32.png image from \"" + IconFolder + "\"." + System.Environment.NewLine + "No large icon will be used.", "Error Loading Icon" + ex.Message);
+                            System.Windows.MessageBox.Show("Unable to load the 32x32.png image from \"" + IconFolder + "\"." + System.Environment.NewLine + "No large icon will be used.", "Error Loading Icon" + ex.Message);
                         }
                     }
                     else
-                        MessageBox.Show("The icon for the large button does not exist: \"" + filename32x32 + "\"." + System.Environment.NewLine + "No large icon will be used.", "Error Loading Icon");
+                        System.Windows.MessageBox.Show("The icon for the large button does not exist: \"" + filename32x32 + "\"." + System.Environment.NewLine + "No large icon will be used.", "Error Loading Icon");
                 }
             }
 
@@ -127,7 +127,7 @@ namespace CoreAddIn.AddInWorkers
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Couldn't set up btnDef: " + ex.Message);
+                System.Windows.MessageBox.Show("Couldn't set up btnDef: " + ex.Message);
                 return null;
             }
         }
@@ -152,7 +152,7 @@ namespace CoreAddIn.AddInWorkers
 
             if (!(testDef == null))
             {
-                MessageBox.Show("Error when loading the add-in \"INVENTOR_DrawingFiller\". A command already exists with the same internal name. Each add-in must have a unique internal name. Change the internal name in the call to CreateButtonDefinition.", "Title Block Filler Inventor Add-In");
+                System.Windows.MessageBox.Show("Error when loading the add-in \"INVENTOR_DrawingFiller\". A command already exists with the same internal name. Each add-in must have a unique internal name. Change the internal name in the call to CreateButtonDefinition.", "Title Block Filler Inventor Add-In");
                 return null;
             }
 
@@ -172,6 +172,7 @@ namespace CoreAddIn.AddInWorkers
             // Get the images from the specified icon folder.
             stdole.IPictureDisp iPicDisp16x16 = null;
             stdole.IPictureDisp iPicDisp32x32 = null;
+
             if (!string.IsNullOrEmpty(IconFolder))
             {
                 if (System.IO.Directory.Exists(IconFolder))
@@ -188,11 +189,11 @@ namespace CoreAddIn.AddInWorkers
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Unable to load the 16x16.png image from \"" + IconFolder + "\"." + System.Environment.NewLine + "No small icon will be used.", "Error Loading Icon" + ex.Message);
+                            System.Windows.MessageBox.Show("Unable to load the 16x16.png image from \"" + IconFolder + "\"." + System.Environment.NewLine + "No small icon will be used.", "Error Loading Icon" + ex.Message);
                         }
                     }
                     else
-                        MessageBox.Show("The icon for the small button does not exist: \"" + filename16x16 + "\"." + System.Environment.NewLine + "No small icon will be used.", "Error Loading Icon");
+                        System.Windows.MessageBox.Show("The icon for the small button does not exist: \"" + filename16x16 + "\"." + System.Environment.NewLine + "No small icon will be used.", "Error Loading Icon");
 
                     if (System.IO.File.Exists(filename32x32))
                     {
@@ -203,11 +204,11 @@ namespace CoreAddIn.AddInWorkers
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Unable to load the 32x32.png image from \"" + IconFolder + "\"." + System.Environment.NewLine + "No large icon will be used.", "Error Loading Icon" + ex.Message);
+                            System.Windows.MessageBox.Show("Unable to load the 32x32.png image from \"" + IconFolder + "\"." + System.Environment.NewLine + "No large icon will be used.", "Error Loading Icon" + ex.Message);
                         }
                     }
                     else
-                        MessageBox.Show("The icon for the large button does not exist: \"" + filename32x32 + "\"." + System.Environment.NewLine + "No large icon will be used.", "Error Loading Icon");
+                        System.Windows.MessageBox.Show("The icon for the large button does not exist: \"" + filename32x32 + "\"." + System.Environment.NewLine + "No large icon will be used.", "Error Loading Icon");
                 }
             }
 
@@ -231,7 +232,7 @@ namespace CoreAddIn.AddInWorkers
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Couldn't set up combodef: " + ex.Message);
+                System.Windows.MessageBox.Show("Couldn't set up combodef: " + ex.Message);
                 return null;
             }
         }
@@ -283,7 +284,7 @@ namespace CoreAddIn.AddInWorkers
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Couldn't ConvertImageToIPictureDisp: " + ex.Message);
+                    System.Windows.MessageBox.Show("Couldn't ConvertImageToIPictureDisp: " + ex.Message);
                     return null;
                 }
             }
@@ -296,7 +297,7 @@ namespace CoreAddIn.AddInWorkers
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Couldn't set up ConvertIPictureDispToImage: " + ex.Message);
+                    System.Windows.MessageBox.Show("Couldn't set up ConvertIPictureDispToImage: " + ex.Message);
                     return null;
                 }
             }

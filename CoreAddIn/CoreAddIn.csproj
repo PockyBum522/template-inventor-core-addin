@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<UseWPF>true</UseWPF>
+	<UseWindowsForms>true</UseWindowsForms>
+	<PlatformTarget>x64</PlatformTarget>
+	<Platforms>x64</Platforms>
+	<AssemblyName>CoreAddIn</AssemblyName>
+	<RootNamespace>CoreAddIn</RootNamespace>
+	<Version>1.0.0.1</Version>
+  </PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+	  <StartAction>Program</StartAction>
+	  <StartProgram>C:\Program Files\Autodesk\Inventor 2022\Bin\Inventor.exe</StartProgram>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<EnableComHosting>True</EnableComHosting>
+
+		<!-- Generate a RegFree COM manifest -->
+		<ApplicationManifest>Resources\INVENTOR_CoreAddIn.manifest</ApplicationManifest>
+		<EnableRegFreeCom>True</EnableRegFreeCom>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Buttons\MainIcon\16x16.png" />
+    <None Remove="Resources\Buttons\MainIcon\32x32.png" />
+    <None Remove="Resources\Buttons\ManualInputIcon\16x16.png" />
+    <None Remove="Resources\Buttons\ManualInputIcon\32x32.png" />
+    <None Remove="Resources\Microsoft.VisualStudio.Interop.dll" />
+  </ItemGroup>
+
+
+	<ItemGroup>
+    <Content Include="Resources\Buttons\MainIcon\16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Buttons\MainIcon\32x32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Buttons\ManualInputIcon\16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Buttons\ManualInputIcon\32x32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Microsoft.VisualStudio.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Autodesk.Inventor.Interop">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Inventor 2022\Bin\Public Assemblies\Autodesk.Inventor.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="stdole">
+      <HintPath>Resources\stdole.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Interop" Version="17.1.32210.191" />
+  </ItemGroup>
+
+</Project>

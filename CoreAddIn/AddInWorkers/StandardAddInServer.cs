@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using Inventor;
 
-namespace CoreAddIn.AddInWorkers
+namespace CoreAddIn
 {
-    [ProgId("INVENTOR_DrawingFiller.StandardAddInServer")]
+    [ComVisible(true)]
     [Guid(Globals.g_simpleAddInClientID)]
-    public class StandardAddInServer : ApplicationAddInServer
+    [ProgId("CoreAddIn.StandardAddInServer")]
+    public class StandardAddInServer : ApplicationAddInServer, IStandardAddInServer
     {
         // *********************************************************************************
         // * The two declarations below are related to adding buttons to Inventor's UI.
@@ -81,7 +81,7 @@ namespace CoreAddIn.AddInWorkers
                 switch (bd.InternalName)
                 {
                     case "dw_NewWithPathFromPart":
-                        MessageBox.Show(Globals.invApp.ActiveDocument.DisplayName);
+                        System.Windows.MessageBox.Show(Globals.invApp.ActiveDocument.DisplayName);
                         return;
 
                     default:
@@ -106,6 +106,8 @@ namespace CoreAddIn.AddInWorkers
         // the first time. However, with the introduction of the ribbon this argument is always true.
         public void Activate(ApplicationAddInSite addInSiteObject, bool firstTime)
         {
+            MessageBox.Show("Starting Activate()");
+
             try
             {
                 // Initialize AddIn members.
@@ -128,16 +130,16 @@ namespace CoreAddIn.AddInWorkers
                 // Add to the user interface, if it's the first time.
                 // If this add-in doesn't have a UI but runs in the background listening
                 // to events, you can delete this.
-                if(firstTime)
+                if (firstTime)
                 {
                     AddToUserInterface();
                 }
 
-                    
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unexpected failure in the activation of the add-in \"INVENTOR_DrawingFiller\"" + System.Environment.NewLine + System.Environment.NewLine + ex.Message);
+                System.Windows.MessageBox.Show("Unexpected failure in the activation of the add-in \"INVENTOR_DrawingFiller\"" + System.Environment.NewLine + System.Environment.NewLine + ex.Message);
             }
         }
 
@@ -209,11 +211,11 @@ namespace CoreAddIn.AddInWorkers
             #endregion
 
             // Part panel buttons
-            if(!(ButtonShowPartName == null))
+            if (!(ButtonShowPartName == null))
             {
                 MyPanel_part.CommandControls.AddButton(ButtonShowPartName, false);
             }
-            
+
         }
 
 
@@ -221,6 +223,7 @@ namespace CoreAddIn.AddInWorkers
         {
             RibbonTab setup_tabRet = default(RibbonTab);
             RibbonTab ribbon_tab = null;
+
             try
             {
                 ribbon_tab = inv_ribbon.RibbonTabs[internal_name];
@@ -236,6 +239,7 @@ namespace CoreAddIn.AddInWorkers
             }
 
             setup_tabRet = ribbon_tab;
+
             return setup_tabRet;
         }
 
@@ -244,6 +248,7 @@ namespace CoreAddIn.AddInWorkers
         {
             RibbonPanel setup_panelRet = default(RibbonPanel);
             RibbonPanel ribbon_panel = null;
+
             try
             {
                 ribbon_panel = ribbon_tab.RibbonPanels[internal_name];
@@ -259,6 +264,7 @@ namespace CoreAddIn.AddInWorkers
             }
 
             setup_panelRet = ribbon_panel;
+
             return setup_panelRet;
         }
 
@@ -269,7 +275,7 @@ namespace CoreAddIn.AddInWorkers
             AddToUserInterface();
         }
     }
-    
+
     public static class Globals
     {
         // Inventor application object.
@@ -279,6 +285,7 @@ namespace CoreAddIn.AddInWorkers
         // you need to update this ID along with the ID in the .manifest file, the .addin file
         // and create a new ID for the typelib GUID in AssemblyInfo.vb
         public const string g_simpleAddInClientID = "5d437d7f-a9a9-4e01-a509-bcd8cced82e1";
+        public const string g_simpleAddInInterfaceID = "C9EF0B81-B014-420F-B4FE-4374FCE961F7";
         public const string g_addInClientID = "{" + g_simpleAddInClientID + "}";
     }
 }
