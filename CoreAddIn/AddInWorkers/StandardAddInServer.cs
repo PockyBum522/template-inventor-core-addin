@@ -63,15 +63,15 @@ namespace CoreAddIn
                 [MethodImpl(MethodImplOptions.Synchronized)]
                 set
                 {
-                    if (this._btnDefinition != null)
+                    if (_btnDefinition != null)
                     {
-                        this._btnDefinition.OnExecute -= BtnDefinition_OnExecute;
+                        _btnDefinition.OnExecute -= BtnDefinition_OnExecute;
                     }
 
-                    this._btnDefinition = value;
-                    if (this._btnDefinition != null)
+                    _btnDefinition = value;
+                    if (_btnDefinition != null)
                     {
-                        this._btnDefinition.OnExecute += BtnDefinition_OnExecute;
+                        _btnDefinition.OnExecute += BtnDefinition_OnExecute;
                     }
                 }
             }
@@ -136,7 +136,7 @@ namespace CoreAddIn
 
                 // Add to the user interface, if it's the first time.
                 // If this add-in doesn't have a UI but runs in the background listening
-                // to events, you can delete this.
+                // to events, you can delete this
                 if (firstTime)
                 {
                     AddToUserInterface();
