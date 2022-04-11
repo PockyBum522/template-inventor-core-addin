@@ -48,10 +48,10 @@ namespace CoreAddIn
 
             try
             {
-                if (Globals.invApp != null)
-                    testDef = (Inventor.ButtonDefinition)Globals.invApp.CommandManager.ControlDefinitions[InternalName];
+                if (Globals.InvApp != null)
+                    testDef = (Inventor.ButtonDefinition)Globals.InvApp.CommandManager.ControlDefinitions[InternalName];
                 else
-                    throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
+                    throw new NullReferenceException($"{ nameof(Globals.InvApp) } was null. We somehow do not have a valid Inventor Application reference");
             }
             catch 
             {
@@ -129,10 +129,10 @@ namespace CoreAddIn
             {
                 ControlDefinitions controlDefs;
 
-                if (Globals.invApp != null)
-                    controlDefs = Globals.invApp.CommandManager.ControlDefinitions;
+                if (Globals.InvApp != null)
+                    controlDefs = Globals.InvApp.CommandManager.ControlDefinitions;
                 else
-                    throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
+                    throw new NullReferenceException($"{ nameof(Globals.InvApp) } was null. We somehow do not have a valid Inventor Application reference");
                 
                 // Create the command defintion.
                 ButtonDefinition btnDef = controlDefs.AddButtonDefinition(DisplayName, InternalName, Inventor.CommandTypesEnum.kShapeEditCmdType, Globals.g_addInClientID, "", ToolTip, iPicDisp16x16, iPicDisp32x32);
@@ -158,10 +158,10 @@ namespace CoreAddIn
 
             try
             {
-                if (Globals.invApp != null)
-                    testDef = (Inventor.ButtonDefinition)Globals.invApp.CommandManager.ControlDefinitions[InternalName];
+                if (Globals.InvApp != null)
+                    testDef = (Inventor.ButtonDefinition)Globals.InvApp.CommandManager.ControlDefinitions[InternalName];
                 else
-                    throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
+                    throw new NullReferenceException($"{ nameof(Globals.InvApp) } was null. We somehow do not have a valid Inventor Application reference");
 
                 
             }
@@ -241,10 +241,10 @@ namespace CoreAddIn
                 // Get the ControlDefinitions collection.
                 ControlDefinitions controlDefs;
 
-                if (Globals.invApp != null)
-                    controlDefs = Globals.invApp.CommandManager.ControlDefinitions;
+                if (Globals.InvApp != null)
+                    controlDefs = Globals.InvApp.CommandManager.ControlDefinitions;
                 else
-                    throw new NullReferenceException($"{ nameof(Globals.invApp) } was null. We somehow do not have a valid Inventor Application reference");
+                    throw new NullReferenceException($"{ nameof(Globals.InvApp) } was null. We somehow do not have a valid Inventor Application reference");
 
                 // Create the command defintion.
                 ComboBoxDefinition comboDef = controlDefs.AddComboBoxDefinition(DisplayName,
